@@ -38,12 +38,12 @@ def get_ip_information(ip):
 # manual building of markdown, when we get as an input the json dict , parsed from the IP
 def build_markdown(json_dict):
     # fill the desired variables from the input
-    country = json_dict['country'] if 'country' in json_dict.keys() else ""
-    region = json_dict['region'] if 'region' in json_dict.keys() else ""
-    city = json_dict['city'] if 'city' in json_dict.keys() else ""
-    latitude = json_dict['latitude'] if 'latitude' in json_dict.keys() else ""
-    longitude = json_dict['longitude'] if 'longitude' in json_dict.keys() else ""
-    organization = json_dict['org'] if 'org' in json_dict.keys() else ""
+    country = json_dict.get('country','NA')
+    region = json_dict.get('region','   NA   ')
+    city = json_dict.get('city','  NA  ')
+    latitude = json_dict.get('latitude','  NA   ')
+    longitude = json_dict.get('longitude','   NA    ')
+    organization = json_dict.get('org','   NA')
 
     markdown = (
         "IP provided: {ip}"
@@ -57,15 +57,15 @@ def build_markdown(json_dict):
         "         Coordinates\n\n"
         "| Latitude | Longitude |\n"
         "|----------|-----------|\n"
-        "|  {latitude} |  {longitude}| \n"
+        "|  {latitude} | {longitude} | \n"
         "\n"
         "         Organizations\n\n"
         "    {organization}"
-    ).format(ip=json_dict['ip'], country=country if country != '' else "NA",
-             region=region if region != '' else "   NA   ", city=city if city != '' else "  NA  ",
-             latitude=latitude if latitude != '' else "  NA   ",
-             longitude=longitude if longitude != '' else "   NA    ",
-             organization=organization if organization != '' else "   NA")
+    ).format(ip=json_dict['ip'], country=country,
+             region=region, city=city,
+             latitude=latitude,
+             longitude=longitude,
+             organization=organization)
     return markdown
 
 
